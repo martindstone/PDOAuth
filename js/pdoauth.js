@@ -33,8 +33,8 @@
 (function() {
 	window.PDOAuth = (function() {
 		class PDOAuth {
-			static gen128x8bitNonce() {
-			    const array = new Uint8Array(128); //( generate 1024bits 8*128
+			static gen64x8bitNonce() {
+			    const array = new Uint8Array(64); //( generate 1024bits 8*128
 			    window.crypto.getRandomValues(array);
 			    return array;
 			};
@@ -93,7 +93,7 @@
 
 			static createCodeVerifier() {
 			    // generate code verifier
-			    const generatedCode = this.gen128x8bitNonce();
+			    const generatedCode = this.gen64x8bitNonce();
 			    // base64 encode code_verifier
 			    return this.base64Unicode(generatedCode.buffer);
 			}
