@@ -177,9 +177,9 @@
 			    if (code && codeVerifier) {
 			        PDOAuth.exchangeCodeForToken(clientID, redirectURL, codeVerifier, code).then((tokenResp) => {
 			        	if (tokenResp) {
-			        		sessionStorage.setItem('pd_access_token', token.access_token)
-			        		sessionStorage.setItem('pd_refresh_token', token.refresh_token)
-			        		sessionStorage.setItem('pd_expires_at', token.expires_at)
+			        		sessionStorage.setItem('pd_access_token', tokenResp.access_token)
+			        		sessionStorage.setItem('pd_refresh_token', tokenResp.refresh_token)
+			        		sessionStorage.setItem('pd_expires_at', tokenResp.expires_at)
 			        		sessionStorage.removeItem('code_verifier')
 									console.log(tokenResp)
 			        		location.assign(redirectURL)
