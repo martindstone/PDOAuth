@@ -122,7 +122,7 @@
 			        `code_verifier=${codeVerifier}`
 			    let data = await postData(requestTokenUrl, {})
 		        if (data.access_token) {
-		        	return data.access_token
+		        	return data
 		        } else {
 		        	console.log("Error in response from PD:", data)
 		        }
@@ -175,10 +175,13 @@
 			    let code = urlParams.get('code')
 			    let codeVerifier = sessionStorage.getItem('code_verifier')
 			    if (code && codeVerifier) {
-			        PDOAuth.exchangeCodeForToken(clientID, redirectURL, codeVerifier, code).then((token) => {
-			        	if (token) {
-			        		sessionStorage.setItem('pd_access_token', token)
+			        PDOAuth.exchangeCodeForToken(clientID, redirectURL, codeVerifier, code).then((tokenResp) => {
+			        	if (tokenResp) {
+			        		sessionStorage.setItem('pd_access_token', token.access_token)
+			        		sessionStorage.setItem('pd_refresh_token', token.refresh_token)
+			        		sessionStorage.setItem('pd_expires_at', token.expires_at)
 			        		sessionStorage.removeItem('code_verifier')
+									console.log(tokenResp)
 			        		location.assign(redirectURL)
 			        	} else {
 			        		PDOAuth.writeLoginPage(clientID, redirectURL)
